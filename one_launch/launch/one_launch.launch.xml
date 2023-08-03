@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
+
+  <group if="$(var use_pointcloud_container)">
+    <include file="$(find-pkg-share one_launch)/launch/pointcloud_container.launch.py">
+      <arg name="use_multithread" value="true"/>
+      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+
+  <group>
+    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share one_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
+  </group>
+</launch>
