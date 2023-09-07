@@ -21,4 +21,16 @@ This package contains:
 
 ## Function
 
-T
+The launch file runs:
+- `robot_state_publisher`
+- `vehicle_info`
+
+### `robot_state_publisher`
+
+Publishes the TF tree for the vehicle and sensor kit.
+
+Also publishes the `/robot_description` which enables `rviz2` to visualize the vehicle and sensor models.
+
+### `vehicle_info`
+
+Publishes the vehicle dimensions.
