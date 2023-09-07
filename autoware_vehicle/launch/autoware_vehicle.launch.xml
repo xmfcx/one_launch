@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- robot_state_publisher -->
+  <group>
+    <arg name="model_file" default="$(find-pkg-share autoware_vehicle)/urdf/main.xacro"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" exec="robot_state_publisher">
+      <param name="robot_description" value="$(command 'xacro $(var model_file)' 'warn')"/>
+    </node>
+  </group>
+
+  <!-- vehicle_info -->
+  <group>
+    <include file="$(find-pkg-share vehicle_info_util)/launch/vehicle_info.launch.py">
+      <arg name="vehicle_info_param_file" value="$(find-pkg-share autoware_vehicle)/config/vehicle_info.param.yaml"/>
+    </include>
+  </group>
+</launch>
