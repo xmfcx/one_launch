@@ -8,5 +8,8 @@
   <!-- vehicle_info and robot_state_publisher -->
   <include file="$(find-pkg-share autoware_vehicle)/launch/autoware_vehicle.launch.xml"/>
 
+  <!-- sensing -->
+  <include file="$(find-pkg-share autoware_vehicle)/launch/components/sensing.launch.xml"/>
+
 
 </launch>
