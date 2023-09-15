@@ -8,8 +8,12 @@
   <!-- vehicle_info and robot_state_publisher -->
   <include file="$(find-pkg-share autoware_vehicle)/launch/autoware_vehicle.launch.xml"/>
 
+  <!-- sensing_component_container -->
+<!--  <node pkg="rclcpp_components" exec="component_container_mt" name="sensing_component_container">-->
+<!--  </node>-->
+
   <!-- sensing -->
-  <include file="$(find-pkg-share autoware_vehicle)/launch/components/sensing/sensing.launch.xml"/>
+  <include file="$(find-pkg-share one_launch)/launch/components/sensing/sensing.launch.xml"/>
 
 
 </launch>

@@ -1,10 +1,10 @@
 <launch>
   <arg name="launch_driver" default="true"/>
   <arg name="use_concat_filter" default="true"/>
-  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
-  <arg name="vehicle_mirror_param_file"/>
-  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
-  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="vehicle_id" default="golf"/>
+  <arg name="vehicle_mirror_param_file" default="$(find-pkg-share autoware_vehicle)/config/mirror.param.yaml"/>
+  <arg name="use_pointcloud_container" default="true"/>
+  <arg name="pointcloud_container_name" default="sensing_component_container"/>
 
   <group>
     <push-ros-namespace namespace="lidar"/>

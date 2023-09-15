@@ -24,7 +24,7 @@
   <arg name="use_pointcloud_container" default="false"/>
   <arg name="container_name" default="velodyne_node_container"/>
 
-  <include file="$(find-pkg-share golf_common_sensor_launch)/launch/velodyne_node_container.launch.py">
+  <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_node_container.launch.py">
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="model" value="$(var model)"/>
     <arg name="calibration" value="$(var calibration)"/>

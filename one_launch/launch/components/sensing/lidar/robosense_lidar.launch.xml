@@ -10,7 +10,7 @@
   <arg name="use_pointcloud_container" default="false"/>
   <arg name="container_name" default="rslidar_node_container"/>
 
-  <include file="$(find-pkg-share golf_common_sensor_launch)/launch/robosense_lidar_node_container.launch.py">
+  <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/robosense_lidar_node_container.launch.py">
     <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
     <arg name="launch_driver" value="$(var launch_driver)"/>
     <arg name="use_intra_process" value="true"/>
