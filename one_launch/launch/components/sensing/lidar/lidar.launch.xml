@@ -1,0 +1,129 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+  <arg name="use_concat_filter" default="true"/>
+  <arg name="vehicle_id" default="$(env VEHICLE_ID default)"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <group>
+    <push-ros-namespace namespace="lidar"/>
+
+    <group>
+      <push-ros-namespace namespace="top"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_VLS128.launch.xml">
+        <arg name="sensor_frame" value="VLS128_TOP"/>
+        <arg name="device_ip" value="192.168.0.215"/>
+        <arg name="port" value="2375"/>
+        <arg name="scan_phase" value="300.0"/>
+        <!-- TODO(fred-apex-ai) sensor_timestamp not supported anymore in ros2 driver but default values changed here -->
+        <!-- <arg name="sensor_timestamp" value="false" /> -->
+        <arg name="invalid_point_remove" value="true"/>
+        <arg name="invalid_rings" value="[1,2,3]"/>
+        <arg name="invalid_angles_start" value="[15000,15000,15000]"/>
+        <arg name="invalid_angles_end" value="[21000,21000,21000]"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <group>
+      <push-ros-namespace namespace="front"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/robosense_lidar.launch.xml">
+        <arg name="lidar_type" value="RSBP"/>
+        <arg name="input_type" value="online"/>
+        <arg name="msop_port" value="2371"/>
+        <arg name="difop_port" value="8311"/>
+        <arg name="frame_id" value="RS_BPEARL_F"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+      </include>
+    </group>
+    <group>
+      <push-ros-namespace namespace="middle_left"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_VLP16.launch.xml">
+        <arg name="sensor_frame" value="VLP16_ML"/>
+        <arg name="device_ip" value="192.168.1.210"/>
+        <arg name="port" value="2370"/>
+        <arg name="scan_phase" value="180.0"/>
+        <!-- TODO(fred-apex-ai) sensor_timestamp not supported anymore in ros2 driver but default values changed here -->
+        <!-- <arg name="sensor_timestamp" value="false" /> -->
+        <arg name="invalid_point_remove" value="true"/>
+        <arg name="invalid_rings" value="[12,0,1,2,3,4,5,6,0,1,2,3,4]"/>
+        <arg name="invalid_angles_start" value="[31110,3500,3400,3200,3200,3000,2950,3100,26000,26000,26000,26000,26000]"/>
+        <arg name="invalid_angles_end" value="[31495,6900,6500,4600,4600,4300,4050,3800,32200,32200,31000,30000,28000]"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <group>
+      <push-ros-namespace namespace="middle_right"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_VLP16.launch.xml">
+        <arg name="sensor_frame" value="VLP16_MR"/>
+        <arg name="device_ip" value="192.168.1.212"/>
+        <arg name="port" value="2372"/>
+        <arg name="scan_phase" value="180.0"/>
+        <!-- TODO(fred-apex-ai) sensor_timestamp not supported anymore in ros2 driver but default values changed here -->
+        <!-- <arg name="sensor_timestamp" value="false" /> -->
+        <arg name="invalid_point_remove" value="true"/>
+        <arg name="invalid_rings" value="[0,1,2,3,4,5,6,0,1,2,3,4]"/>
+        <arg name="invalid_angles_start" value="[28300,29100,31050,31050,31050,31500,32000,3800,4700,5200,6600,8000]"/>
+        <arg name="invalid_angles_end" value="[33000,33000,33000,33000,33000,33000,33000,9300,9000,9000,9000,9000]"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <group>
+      <push-ros-namespace namespace="rear_right"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_VLP16.launch.xml">
+        <arg name="sensor_frame" value="VLP16_BR"/>
+        <arg name="device_ip" value="192.168.1.213"/>
+        <arg name="port" value="2373"/>
+        <arg name="scan_phase" value="180.0"/>
+        <!-- TODO(fred-apex-ai) sensor_timestamp not supported anymore in ros2 driver but default values changed here -->
+        <!-- <arg name="sensor_timestamp" value="false" /> -->
+        <arg name="invalid_point_remove" value="true"/>
+        <arg name="invalid_rings" value="[14]"/>
+        <arg name="invalid_angles_start" value="[22500]"/>
+        <arg name="invalid_angles_end" value="[24000]"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <group>
+      <push-ros-namespace namespace="rear_left"/>
+      <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/velodyne_VLP16.launch.xml">
+        <arg name="sensor_frame" value="VLP16_BL"/>
+        <arg name="device_ip" value="192.168.1.214"/>
+        <arg name="port" value="2374"/>
+        <arg name="scan_phase" value="180.0"/>
+        <!-- TODO(fred-apex-ai) sensor_timestamp not supported anymore in ros2 driver but default values changed here -->
+        <!-- <arg name="sensor_timestamp" value="false" /> -->
+        <arg name="invalid_point_remove" value="true"/>
+        <arg name="invalid_rings" value="[5,6,7,11,12,13,14,15]"/>
+        <arg name="invalid_angles_start" value="[12100,12100,12100,12100,11800,11800,11800,11800]"/>
+        <arg name="invalid_angles_end" value="[12500,12500,12500,12900,12500,12500,13000,12500]"/>
+        <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+        <arg name="launch_driver" value="$(var launch_driver)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="container_name" value="$(var pointcloud_container_name)"/>
+      </include>
+    </group>
+    <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/cloud_concat.launch.py">
+      <arg name="base_frame" value="base_link"/>
+      <arg name="use_intra_process" value="true"/>
+      <arg name="use_multithread" value="true"/>
+      <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+      <arg name="container_name" value="$(var pointcloud_container_name)"/>
+    </include>
+  </group>
+</launch>

@@ -1,0 +1,21 @@
+<launch>
+  <!-- Params -->
+  <arg name="launch_driver" default="true"/>
+  <arg name="lidar_type" default="RSBP"/>
+  <arg name="input_type" default="online"/>
+  <arg name="msop_port" default="2011"/>
+  <arg name="difop_port" default="3011"/>
+  <arg name="frame_id" default="rslidar"/>
+  <arg name="vehicle_mirror_param_file"/>
+  <arg name="use_pointcloud_container" default="false"/>
+  <arg name="container_name" default="rslidar_node_container"/>
+
+  <include file="$(find-pkg-share golf_common_sensor_launch)/launch/robosense_lidar_node_container.launch.py">
+    <arg name="vehicle_mirror_param_file" value="$(var vehicle_mirror_param_file)"/>
+    <arg name="launch_driver" value="$(var launch_driver)"/>
+    <arg name="use_intra_process" value="true"/>
+    <arg name="use_multithread" value="false"/>
+    <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+    <arg name="container_name" value="$(var container_name)"/>
+  </include>
+</launch>

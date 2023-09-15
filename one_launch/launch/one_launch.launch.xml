@@ -9,7 +9,7 @@
   <include file="$(find-pkg-share autoware_vehicle)/launch/autoware_vehicle.launch.xml"/>
 
   <!-- sensing -->
-  <include file="$(find-pkg-share autoware_vehicle)/launch/components/sensing.launch.xml"/>
+  <include file="$(find-pkg-share autoware_vehicle)/launch/components/sensing/sensing.launch.xml"/>
 
 
 </launch>

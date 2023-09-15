@@ -7,10 +7,10 @@
 
   <load_composable_node target="sensing_component_container">
 
-    <composable_node pkg="image_tools" plugin="image_tools::ShowImage" name="showimage" namespace="">
-      <remap from="/image" to="/burgerimage" />
-      <param name="history" value="keep_last" />
-      <extra_arg name="use_intra_process_comms" value="true" />
+    <composable_node pkg="awf_velodyne_pointcloud" plugin="velodyne_pointcloud::Convert" name="velodyne_convert_node" namespace="">
+      <remap from="/image" to="/burgerimage"/>
+      <param name="history" value="keep_last"/>
+      <extra_arg name="use_intra_process_comms" value="true"/>
     </composable_node>
 
   </load_composable_node>
