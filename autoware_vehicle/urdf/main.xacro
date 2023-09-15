@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
 <robot name="vehicle" xmlns:xacro="http://ros.org/wiki/xacro">
-
-  <!-- vehicle -->
   <xacro:include filename="$(find autoware_vehicle)/urdf/vehicle.xacro"/>
-
-  <!-- sensors -->
   <xacro:include filename="$(find autoware_vehicle)/urdf/sensors.xacro"/>
 </robot>
