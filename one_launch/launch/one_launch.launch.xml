@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <arg name="map_path" default="/home/mfc/autoware_map/nishishinjuku_autoware_map"/>
-  <set_parameter name="use_sim_time" value="true"/>
+  <set_parameter name="use_sim_time" value="false"/>
 
   <arg name="path_this_pkg" default="$(find-pkg-share one_launch)"/>
 
@@ -9,11 +9,12 @@
   <include file="$(find-pkg-share autoware_vehicle)/launch/autoware_vehicle.launch.xml"/>
 
   <!-- sensing_component_container -->
-<!--  <node pkg="rclcpp_components" exec="component_container_mt" name="sensing_component_container">-->
-<!--  </node>-->
+  <!--  <node pkg="rclcpp_components" exec="component_container_mt" name="sensing_component_container">-->
+  <!--  </node>-->
 
-  <!-- sensing -->
   <include file="$(find-pkg-share one_launch)/launch/components/sensing/sensing.launch.xml"/>
 
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
+        args="-d $(find-pkg-share one_launch)/rviz/autoware.rviz -s $(find-pkg-share one_launch)/rviz/image/autoware.png"/>
 
 </launch>

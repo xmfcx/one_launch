@@ -3,7 +3,8 @@
 
   <group>
   <push-ros-namespace namespace="sensing"/>
-  <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/lidar.launch.xml"/>
+    <include file="$(find-pkg-share one_launch)/launch/components/sensing/lidar/lidar.launch.xml"/>
+    <include file="$(find-pkg-share one_launch)/launch/components/sensing/gnss_ins/gnss_ins.launch.xml"/>
 
   </group>
 

@@ -1,0 +1,36 @@
+<launch>
+
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+
+    <node pkg="sbg_driver" exec="sbg_device">
+      <param from="$(find-pkg-share sbg_driver)/config/example/ellipse_D_default.yaml"/>
+    </node>
+
+    <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
+      <arg name="input_topic_fix" value="/sensing/gnss/sbg/ros/nav_sat_fix"/>
+      <arg name="input_topic_orientation" value="/sensing/gnss/sbg/autoware_orientation"/>
+
+      <arg name="output_topic_gnss_pose" value="pose"/>
+      <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
+      <arg name="output_topic_gnss_fixed" value="fixed"/>
+
+      <!-- coordinate_system: 0:UTM, 1:MGRS, 2:PLANE, 3:LocalCartesianWGS84, 4:LocalCartesianUTM-->
+      <arg name="coordinate_system" value="1"/>
+      <arg name="use_gnss_ins_orientation" value="true"/>
+      <arg name="height_system" value="0"/>
+      <arg name="gnss_frame" value="GNSS_INS/gnss_ins_link"/>
+      <arg name="gnss_base_frame" value="gnss_ins_base_link"/>
+    </include>
+  </group>
+
+  <group>
+    <push-ros-namespace namespace="imu"/>
+    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
+      <arg name="input_topic" value="/sensing/gnss/sbg/ros/imu/data"/>
+      <arg name="output_topic" value="imu_data"/>
+      <arg name="param_file" value="$(find-pkg-share one_launch)/config/components/sensing/gnss_ins/imu_corrector.param.yaml"/>
+    </include>
+  </group>
+
+</launch>
