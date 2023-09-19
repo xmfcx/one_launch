@@ -3,7 +3,7 @@
   <group>
     <push-ros-namespace namespace="gnss"/>
 
-    <node pkg="sbg_driver" exec="sbg_device">
+    <node pkg="sbg_driver" exec="sbg_device" name="sbg_device">
       <param from="$(find-pkg-share sbg_driver)/config/example/ellipse_D_default.yaml"/>
     </node>
 

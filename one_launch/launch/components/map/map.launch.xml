@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="lanelet2_map_path" default="/home/golf/files/ytu_map/lanelet2_map.osm"/>
+  <arg name="pointcloud_map_path" default="/home/golf/files/ytu_map/pointcloud_map.pcd"/>
+  <arg name="pointcloud_map_metadata_path" default="/home/golf/files/ytu_map/pointcloud_map_metadata.yaml"/>
+  <arg name="map_projector_info_path" default="/home/golf/files/ytu_map/map_projector_info.yaml"/>
+  <arg name="pointcloud_map_loader_param_path" default="$(find-pkg-share one_launch)/config/components/map/pointcloud_map_loader.param.yaml"/>
+  <arg name="lanelet2_map_loader_param_path" default="$(find-pkg-share one_launch)/config/components/map/lanelet2_map_loader.param.yaml"/>
+
+  <group>
+    <push-ros-namespace namespace="map"/>
+
+    <node pkg="map_loader" exec="map_hash_generator" name="map_hash_generator">
+      <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+      <param name="pointcloud_map_path" value="$(var pointcloud_map_path)"/>
+    </node>
+
+    <include file="$(find-pkg-share map_projection_loader)/launch/map_projection_loader.launch.xml">
+      <arg name="map_projector_info_path" value="$(var map_projector_info_path)"/>
+      <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+    </include>
+
+    <node_container pkg="rclcpp_components" exec="component_container_mt" name="map_container" namespace="">
+      <!-- lanelet2_map_loader -->
+      <composable_node pkg="map_loader" plugin="Lanelet2MapLoaderNode" name="lanelet2_map_loader">
+        <remap from="output/lanelet2_map" to="vector_map"/>
+        <param name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
+        <param from="$(var lanelet2_map_loader_param_path)"/>
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+
+      <!-- lanelet2_map_visualization -->
+      <composable_node pkg="map_loader" plugin="Lanelet2MapVisualizationNode" name="lanelet2_map_visualization">
+        <remap from="input/lanelet2_map" to="vector_map"/>
+        <remap from="output/lanelet2_map_marker" to="vector_map_marker"/>
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+
+      <!-- pointcloud_map_loader -->
+      <composable_node pkg="map_loader" plugin="PointCloudMapLoaderNode" name="pointcloud_map_loader">
+        <remap from="output/pointcloud_map" to="pointcloud_map"/>
+        <remap from="output/pointcloud_map_metadata" to="pointcloud_map_metadata"/>
+        <remap from="service/get_partial_pcd_map" to="/map/get_partial_pointcloud_map"/>
+        <remap from="service/get_differential_pcd_map" to="/map/get_differential_pointcloud_map"/>
+        <remap from="service/get_selected_pcd_map" to="/map/get_selected_pointcloud_map"/>
+        <param name="pcd_paths_or_directory" value="[ $(var pointcloud_map_path) ]"/>
+        <param name="pcd_metadata_path" value="$(var pointcloud_map_metadata_path)"/>
+        <param from="$(var pointcloud_map_loader_param_path)"/>
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+
+      <!-- map_tf_generator -->
+      <composable_node pkg="map_tf_generator" plugin="VectorMapTFGeneratorNode" name="vector_map_tf_generator">
+        <param name="map_frame" value="map"/>
+        <param name="viewer_frame" value="viewer"/>
+        <extra_arg name="use_intra_process_comms" value="false"/>
+      </composable_node>
+    </node_container>
+
+  </group>
+
+</launch>
