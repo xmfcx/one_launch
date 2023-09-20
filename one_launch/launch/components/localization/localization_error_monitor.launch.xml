@@ -1,0 +1,6 @@
+<launch>
+  <node name="localization_error_monitor" exec="localization_error_monitor" pkg="localization_error_monitor" output="screen">
+    <remap from="input/odom" to="/localization/kinematic_state"/>
+    <param from="$(find-pkg-share one_launch)/config/components/localization/localization_error_monitor.param.yaml"/>
+  </node>
+</launch>

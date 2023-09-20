@@ -21,7 +21,7 @@
       <arg name="lanelet2_map_path" value="$(var lanelet2_map_path)"/>
     </include>
 
-    <node_container pkg="rclcpp_components" exec="component_container_mt" name="map_container" namespace="">
+    <node_container pkg="rclcpp_components" exec="component_container" name="map_container" namespace="">
       <!-- lanelet2_map_loader -->
       <composable_node pkg="map_loader" plugin="Lanelet2MapLoaderNode" name="lanelet2_map_loader">
         <remap from="output/lanelet2_map" to="vector_map"/>
